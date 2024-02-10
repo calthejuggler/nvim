@@ -1,3 +1,7 @@
+-- Disable netrw for nvim-tree
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
@@ -22,14 +26,14 @@ require('lazy').setup({
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
 
-  -- Auto Save
-  {
-    "Pocco81/auto-save.nvim",
-    config = function()
-      require("auto-save").setup {
-      }
-    end,
-  },
+  -- -- Auto Save
+  -- {
+  --   "Pocco81/auto-save.nvim",
+  --   config = function()
+  --     require("auto-save").setup {
+  --     }
+  --   end,
+  -- },
 
   -- Copilot
   'github/copilot.vim',
@@ -73,7 +77,17 @@ require('lazy').setup({
       'folke/neodev.nvim',
     },
   },
-
+  {
+    "nvim-tree/nvim-tree.lua",
+    dependencies = {
+      "nvim-tree/nvim-web-devicons"
+    },
+    version = "*",
+    lazy = false,
+    config = function()
+      require("nvim-tree").setup {}
+    end,
+  },
   {
     -- Autocompletion
     'hrsh7th/nvim-cmp',
@@ -247,19 +261,14 @@ vim.o.relativenumber = true
 vim.keymap.set('n', ';', ':', { silent = true })
 vim.keymap.set('n', 'zz', ':wq<CR>', { silent = true })
 
+-- Open NvimTree
+vim.keymap.set('n', '<leader>tt', ':NvimTreeToggle<CR>', { desc = '[T]oggle Explorer [T]ree' })
+
 -- Set highlight on search
 vim.o.hlsearch = false
 
 -- 10 lines above or below when scrolling
 vim.wo.scrolloff = 10
-
--- netrw
-vim.g.netrw_keepdir = 0
-vim.g.netrw_winsize = 30
-vim.g.netrw_banner = 0
-vim.g.netrw_localcopydircmd = 'cp -r'
-
-vim.keymap.set('n', '<leader>se', ':Lexplore %:p:h<CR>', { desc = '[S]earch File [E]xplorer' })
 
 -- Make line numbers default
 vim.wo.number = true
